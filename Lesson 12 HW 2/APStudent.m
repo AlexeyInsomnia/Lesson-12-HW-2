@@ -8,36 +8,28 @@
 
 #import "APStudent.h"
 
+
 @implementation APStudent
 
-- (instancetype)init
+- (instancetype)initWithBlock:(OurBlockForSuperman) blockForSuperman
 {
     self = [super init];
     if (self) {
         float delayRandomIs = (5.f +  (float)(arc4random() % 501) / 100.f);
-        [self performSelector:@selector(testSelector) withObject:nil afterDelay:delayRandomIs];
+        
+        [self performSelector:@selector(testSelector:) withObject:blockForSuperman afterDelay:delayRandomIs];
+        
+
         NSLog(@"delay is - %.2f", delayRandomIs);
     }
     return self;
 }
 
-- (void) testSelector{
-    [self whenNotGood:^{
-        
-        if (self.temperature >=37.f && self.temperature <=39.f) {
-            NSLog(@"patient - %@ take a pill, cause temperature is - %.2f !", self.name, self.temperature) ;
-        } else {
-            if (self.temperature >=39.f){
-                NSLog(@"patient - %@ make a shot, cause temperature is - %.2f !", self.name,  self.temperature) ;
-            } else {
-                NSLog(@"patient %@ - go REST for CURE , cause temperature is - %.2f ! !", self.name, self.temperature) ;
-            }
-            
-        }
-        
-    }];
-
+- (void) testSelector: (OurBlockForSuperman) blockObject {
+    
+    NSLog(@"%@", blockObject(self));
 }
+
 
 
 - (void) whenNotGood:(void (^)(void)) blockForCure {

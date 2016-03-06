@@ -8,11 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+
+
 @interface APStudent : NSObject
+
+typedef NSString* (^OurBlockForSuperman)(APStudent*);
 
 @property (strong, nonatomic) NSString* name;
 @property (strong, nonatomic) NSString* lastName;
 @property (assign, nonatomic) float temperature;
 @property (assign, nonatomic) BOOL areYouOk;
+
+- (instancetype)initWithBlock:(OurBlockForSuperman) blockForSuperman;
+
+
 
 @end

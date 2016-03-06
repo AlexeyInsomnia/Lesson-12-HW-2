@@ -12,6 +12,7 @@
 typedef void (^OurTestBlock)(void);
 typedef void (^OurTestBlockWithParams)(NSString*, NSInteger);
 typedef NSString* (^OurTestBlockWillReturnValueWithParams)(NSString*, NSInteger);
+typedef NSString* (^OurBlockForSuperman)(APStudent*);
 
 @interface AppDelegate ()
 
@@ -24,6 +25,34 @@ typedef NSString* (^OurTestBlockWillReturnValueWithParams)(NSString*, NSInteger)
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NSLog(@"******************************* superMan block is started *******************************");
+    
+        
+    OurBlockForSuperman blockForSuperman = ^(APStudent* student) {
+        
+        if (student.temperature >=37.f && student.temperature <=39.f) {
+            
+            return [NSString stringWithFormat:@"patient - %@ take a pill, cause temperature is - %.2f !", student.name, student.temperature];
+            
+            
+        } else {
+            if (student.temperature >=39.f){
+                
+                return [NSString stringWithFormat:@"patient - %@ make a shot, cause temperature is - %.2f !", student.name,  student.temperature];
+                
+                
+            } else {
+                return [NSString stringWithFormat:@"patient %@ - go REST for CURE , cause temperature is - %.2f ! !", student.name, student.temperature];
+                
+            }
+            
+        }
+        
+        
+    };
+    NSLog(@"******************************* superMan block is finished *******************************");
+    
     
     NSLog(@"******************************* pupil mode is ON *******************************");
     [self testMethod];
@@ -105,23 +134,23 @@ typedef NSString* (^OurTestBlockWillReturnValueWithParams)(NSString*, NSInteger)
     
     
     
-    APStudent* student1 = [[APStudent alloc] init];
+    APStudent* student1 = [[APStudent alloc] initWithBlock:blockForSuperman];
     student1.name = @"Betta";
     student1.lastName = @"Snow";
     student1.temperature = (36.f +  (float)(arc4random() % 411) / 100.f);
     
     
-    APStudent* student2 = [[APStudent alloc] init];
+    APStudent* student2 = [[APStudent alloc] initWithBlock:blockForSuperman];
     student2.name = @"Celica";
     student2.lastName = @"Altunieva";
     student2.temperature = (36.f +  (float)(arc4random() % 411) / 100.f);
     
-    APStudent* student3 = [[APStudent alloc] init];
+    APStudent* student3 = [[APStudent alloc] initWithBlock:blockForSuperman];
     student3.name = @"Alisa";
     student3.lastName = @"Snow";
     student3.temperature = (36.f +  (float)(arc4random() % 411) / 100.f);
     
-    APStudent* student4 = [[APStudent alloc] init];
+    APStudent* student4 = [[APStudent alloc] initWithBlock:blockForSuperman];
     student4.name = @"Durunda";
     student4.lastName = @"Biruleva";
     student4.temperature = (36.f +  (float)(arc4random() % 411) / 100.f);
@@ -144,6 +173,16 @@ typedef NSString* (^OurTestBlockWillReturnValueWithParams)(NSString*, NSInteger)
     NSLog(@"after sort %@", array);
     
     NSLog(@"******************************* master mode is ON *******************************");
+    /*
+     
+     Мастер.
+     9. Задание из видео. Из урока о делегатах. У пациентов удалите протокол делегат и соответствующее проперти.
+     10. Добавьте метод принимающий блок когда им станет плохо.
+     11. Блок должен передавать указатель на самого студента ну и на те параметры, которые были в задании по делегатам.
+     12. Теперь когда пациентам поплохеет, они должны вызывать блок, а в блоке нужно принимать решения что делать (доктор не нужен делайте все в апп делегате)
+     
+     */
+    
     
     for (APStudent* patients in array) {
         BOOL howRU = arc4random() %2;
@@ -167,13 +206,10 @@ typedef NSString* (^OurTestBlockWillReturnValueWithParams)(NSString*, NSInteger)
         
     }
     
-    NSLog(@"******************************* superMan mode is ON *******************************");
 
     
-
-    
-
-
+  NSLog(@"******************************* superMan mode is ON *******************************");
+  NSLog(@"plz w8 for 5+ seconds and all 4 patients will cure by superman mode");
     
     
 
